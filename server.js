@@ -24,22 +24,21 @@ const PORT = 3001;
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ exteneded: true}));
 app.use(express.static('public'));
 
 // need a get route for the main page section
 
 app.get('/', (req,res) => 
-    res.sendFile(path.json(__dirname, '/public/index.html'))
+    res.sendFile(path.join(__dirname, '/public/index.html'))
 );
 
 // get for the notes page
 
-app.get('/', (req, res) =>
+app.get('/notes', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
 
-// now that they have been joined i need a get request for the notes html 
+// now that they have been joined i need a get request for the notes.html 
 
 app.get('/api/notes', (req, res) => {
     // send the file
@@ -63,32 +62,42 @@ app.post('/api/notes', (req, res) => {
         const newNote = {
             title, 
             text,
-            id: uuidv4()
+            id: id,
         }
-    fs.readFile('/db/db.json', 'utf-8', (err, data) => {
+    fs.readFile('./db/db.json', 'utf-8', (err, data) => {
         if (err) {
             console.log(err);
         } else {
             const pNotes = JSON.parse(data);
             pNotes.push(newNote)
-            fs.writeFile('/db/db.json', JSON.stringify(pNotes, null, 4), (err) => {
+            fs.writeFile('./db/db.json', JSON.stringify(pNotes, null, 4), (err) => {
                 err ? console.log(err) : console.log('Note added. SUCCESS!')
             })
         }
     })
 
-    const results = {
+    const result = {
         status: 'success',
         body: newNote
     }
 
-    console.log(results);
-    res.json(results);
+    console.log(result);
+    res.json(result);
     } else  {
         res.json("Error posting note.")
     }
 });
 
 // delete request for later
+
+// wildcard 
+app.get('*', (req, res) => 
+    res.sendFile(path.join(__dirname, 'public/index.html'))
+);
+// connection
+
+app.listen(PORT, () => {
+    console.log(`Success, application running on port ${PORT}`);
+})
 
 
