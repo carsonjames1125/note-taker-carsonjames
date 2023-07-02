@@ -65,6 +65,30 @@ app.post('/api/notes', (req, res) => {
             text,
             id: uuidv4()
         }
-        
+    fs.readFile('/db/db.json', 'utf-8', (err, data) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const pNotes = JSON.parse(data);
+            pNotes.push(newNote)
+            fs.writeFile('/db/db.json', JSON.stringify(pNotes, null, 4), (err) => {
+                err ? console.log(err) : console.log('Note added. SUCCESS!')
+            })
+        }
+    })
+
+    const results = {
+        status: 'success',
+        body: newNote
     }
-}
+
+    console.log(results);
+    res.json(results);
+    } else  {
+        res.json("Error posting note.")
+    }
+});
+
+// delete request for later
+
+
