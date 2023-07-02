@@ -9,10 +9,10 @@ const fs = require('fs');
 //need a path var
 const path = require('path');
 
-const notesJS = require('./db/db.json');
-
-// want unique ids for the notes
+// want unique ids for the notes, downloaded uuid through npm to give the notes ids in the json file
 const { v4 : uuidv4 } = require('uuid')
+
+// const allows me to use id for shorthand 
 const id = uuidv4();
 
 // PORT
@@ -75,12 +75,12 @@ app.post('/api/notes', (req, res) => {
             })
         }
     })
-
+// allows the results of the request to be labeled so tracking errors and when they occured is simple 
     const result = {
         status: 'success',
         body: newNote
     }
-
+// console logs the responses if any issue occurs an error will show
     console.log(result);
     res.json(result);
     } else  {
@@ -89,12 +89,19 @@ app.post('/api/notes', (req, res) => {
 });
 
 // delete request for later
+// 
+// 
+// 
+// 
+// 
+// 
+// 
 
-// wildcard 
+// wildcard route 
 app.get('*', (req, res) => 
     res.sendFile(path.join(__dirname, 'public/index.html'))
 );
-// connection
+// connection letting me know that when i start the application that the port and app are running successfully. 
 
 app.listen(PORT, () => {
     console.log(`Success, application running on port ${PORT}`);
