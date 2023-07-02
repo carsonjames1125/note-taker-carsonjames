@@ -88,12 +88,25 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
+
 // delete request for later
-// 
-// 
-// 
-// 
-// 
+// app.delete and use the unique id to target a specific note that i want to delete and link those together with the delete button already visible in the html
+app.delete('/api/notes/:id', (req, res) => {
+    //give notice in the console that a note wishes to be deleted
+    console.log(`${req.method} A note needs to be deleted.`)
+    const noteID = req.params.id;
+    // reads the db.json file, parses the data and filters out what need to be deleted by the uuid set for the note
+    fs.readFile('./db/db.json', 'utf-8', (err, data) => {
+        const pNotes = JSON.parse(data);
+        const noteUpdate = pNotes.filter((note) => note.id !== id);
+
+    // db.json file needs to be rewritten after a deletion with the updated data
+    fs.writeFile('./db/db.json', JSON.stringify(noteUpdate, null, 4), (err) => {
+        err ? console.log(err) : console.log('Note deleted')
+    }) // console logs the success or failure of the deletion and notates which note was deleted by using the unique id 
+    res.json(`${noteID} deleted`);
+    })
+})
 // 
 // 
 
@@ -101,8 +114,8 @@ app.post('/api/notes', (req, res) => {
 app.get('*', (req, res) => 
     res.sendFile(path.join(__dirname, 'public/index.html'))
 );
-// connection letting me know that when i start the application that the port and app are running successfully. 
 
+// connection letting me know that when i start the application that the port and app are running successfully. 
 app.listen(PORT, () => {
     console.log(`Success, application running on port ${PORT}`);
 })
