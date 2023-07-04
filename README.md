@@ -11,9 +11,9 @@ To install my application, I needed node.js to install a unique id dependency, a
 
 ## Usage
 
-Heroku Deployment Link:
+Heroku Deployment Link: https://note-taker-carsonjames-d3b8724c2e89.herokuapp.com/
 
-GitHub Repository:
+GitHub Repository: https://github.com/carsonjames1125/note-taker-carsonjames
 
 ![alt text](./screenshots/photo1.png)
 ![alt text](./screenshots/photo2.png)
