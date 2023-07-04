@@ -41,7 +41,7 @@ app.get('/notes', (req, res) =>
 // now that they have been joined i need a get request for the notes.html 
 
 app.get('/api/notes', (req, res) => {
-    // send the file
+    // read the file
     fs.readFile('./db/db.json', 'utf-8', (err, data) => {
         if (err) {
             console.log(err);
